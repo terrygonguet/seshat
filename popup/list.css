@@ -1,0 +1,39 @@
+body {
+  padding: 5px;
+}
+
+a {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+  text-align: center;
+}
+
+#frmNew {
+  display: none;
+  text-align: center;
+}
+
+#tblProjects {
+  border-collapse: collapse;
+}
+
+#tblProjects td {
+  padding: 10px 25px;
+}
+
+.running {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+.paused {
+  background: rgba(0, 0, 255, 0.5);
+}
+
+.idle {
+  background: rgba(0, 0, 0, 0.3);
+}
