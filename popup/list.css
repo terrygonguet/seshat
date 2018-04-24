@@ -23,7 +23,14 @@ p {
 }
 
 #tblProjects td {
-  padding: 10px 25px;
+  padding: 10px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.separator {
+  font-size: 0.8rem;
+  height: 3px;
 }
 
 .running {
