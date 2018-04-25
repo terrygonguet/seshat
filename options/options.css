@@ -1,0 +1,25 @@
+#tblProjects, #tblSessions {
+  border-collapse: collapse;
+}
+
+#tblProjects td, #tblSessions td {
+  padding: 10px 25px;
+  min-width: 100px;
+  text-align: center;
+}
+
+#tblProjects img {
+  cursor: pointer;
+}
+
+.running {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+.paused {
+  background: rgba(0, 0, 255, 0.5);
+}
+
+.idle {
+  background: rgba(0, 0, 0, 0.3);
+}

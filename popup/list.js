@@ -15,6 +15,7 @@ $("#lblNew").click(e => {
   $("#txbName").focus();
 });
 $("#frmNew").submit(function (e) {
+  e.preventDefault();
   let name = $("#txbName").val();
   if (bg.projects[name] || !name) {
     let msg = $("<p>").text("Invalid or already taken").appendTo(this);
