@@ -20,8 +20,17 @@ p {
 }
 
 #tblProjects {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: -10px; ;
+  max-width: 70%;
 }
+
+#tblProjects tr td:first-child { border-top-left-radius: 10px; }
+#tblProjects tr td:last-child { border-top-right-radius: 10px; }
+#tblProjects tr td:first-child { border-bottom-left-radius: 10px; }
+#tblProjects tr td:last-child { border-bottom-right-radius: 10px; }
+
 
 #tblProjects img {
   cursor: pointer;

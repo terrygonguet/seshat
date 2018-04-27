@@ -42,7 +42,7 @@ function buildUI() {
 
   $(".btnDelete").click(function (e) {
     let name = $(this).attr("data-name");
-    if (confirm("Are you sure you want to delete " + name + " ?")) 
+    if (confirm("Are you sure you want to delete " + name + " ?"))
       bg.removeProject(name).then(buildUI);
   });
 
@@ -110,7 +110,7 @@ function makeEditorSession() {
 function inspectProject(e) {
   let name = $(this).attr("data-name");
   let project = bg.projects[name];
-  let table = $("#tblSessions").empty().append("<tr><th colspan=3><h2>Sessions</h2></th></tr>");
+  let table = $("#tblSessions").empty().append(`<tr><th colspan=4><h2>Sessions</h2></th></tr>`);
   let sessions = project.sessions.concat(project.currentSession || []).reverse();
   $(`<tr>`)
     .append(`<th>Started At</th>`)
