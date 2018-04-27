@@ -1,7 +1,7 @@
 {
   "applications": {
     "gecko": {
-      "id": "seshat@codegalley.io",
+      "id": "timers@codegalley.io",
       "strict_min_version": "42.0"
     }
   },
@@ -31,7 +31,7 @@
     "default_title": "Show Timers"
   },
 
-  "description": "An extension to keep track of time spent on projects",
+  "description": "An extension to keep track of time spent on projects. Compact and fast to use, keeps track of when and how long you worked on something.",
 
   "developer": {
     "name": "Terry Gonguet",
@@ -45,7 +45,7 @@
 
   "manifest_version": 2,
 
-  "name": "Project Seshat",
+  "name": "Project Timers",
 
   "options_ui": {
     "page": "options/options.html",
