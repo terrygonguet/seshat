@@ -1,5 +1,6 @@
 body {
   padding: 5px;
+  background: #EEE;
 }
 
 a {
@@ -35,16 +36,4 @@ p {
 .separator {
   font-size: 0.8rem;
   height: 3px;
-}
-
-.running {
-  background: rgba(0, 255, 0, 0.5);
-}
-
-.paused {
-  background: rgba(0, 0, 255, 0.5);
-}
-
-.idle {
-  background: rgba(0, 0, 0, 0.3);
 }

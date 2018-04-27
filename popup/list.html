@@ -3,11 +3,15 @@
 
 <head>
   <meta charset="utf-8">
+  <link type="text/css" rel="stylesheet" href="../lib/colors.css">
   <link type="text/css" rel="stylesheet" href="list.css">
 </head>
 
 <body>
-  <p><a id="lblSettings">Settings</a> | <a id="lblNew">New Project</a></p>
+  <p>
+    <img src="../resources/settings.png" title="Settings" id="lblSettings">
+    <img src="../resources/create.png" title="New" id="lblNew">
+  </p>
   <form id="frmNew" action="." method="get">
       <input type="text" name="name" value="" placeholder="TODO app" required id="txbName">
   </form>

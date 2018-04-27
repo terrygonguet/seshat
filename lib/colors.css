@@ -1,0 +1,17 @@
+* {
+  --running: rgba(0, 255, 0, 0.5);
+  --paused: rgba(0, 0, 255, 0.5);
+  --idle: rgba(127, 127, 127, 0.5);
+}
+
+.running td {
+  background: var(--running);
+}
+
+.paused td {
+  background: var(--paused);
+}
+
+.idle td {
+  background: var(--idle);
+}
