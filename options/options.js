@@ -9,6 +9,23 @@ var pState = {
   paused: "paused",
 };
 
+$("#btnExport").click(function () {
+  $("#txtData").show().val(JSON.stringify(bg.exportData(), null, 2));
+});
+$("#btnImport").click(function () {
+  let text = $("#txtData").val();
+  if (!text) {
+    $("#txtData").show();
+  } else {
+    let data = JSON.parse(text);
+    if (confirm("This will override all your current data !!!")) {
+      bg.importData(data)
+      .then(buildUI, alert)
+      .then(() => $("#txtData").empty().hide());
+    }
+  }
+});
+
 function compareProjects(a, b) {
   if (a.state === b.state) return 0;
   else if (a.state === pState.running || b.state === pState.idle) return -1;
@@ -39,6 +56,11 @@ function buildUI() {
       </td>`)
       .appendTo(table);
   }
+  $(`<tr id='trCreate'>`)
+    .append(`<td colspan=${$("#tblProjects tr:first-child").children().length}>
+      <img class="btnCreate" src="../resources/create.png" title="Create"/>
+    </td>`)
+    .appendTo(table);
 
   $(".btnDelete").click(function (e) {
     let name = $(this).attr("data-name");
@@ -51,6 +73,8 @@ function buildUI() {
   });
 
   $(".btnInspect").click(inspectProject);
+
+  $(".btnCreate").click(makeEditorProjectNew);
 }
 
 function makeEditorProject(el) {
@@ -70,21 +94,50 @@ function makeEditorProject(el) {
       bg.createNewProject(project)
       .then(() => {
         bg.removeProject(name).then(buildUI);
-      });
+      }, alert);
     } else {
       project.saveSession();
     }
     buildUI();
   });
-  let btnCancel = $("<img src='../resources/cancel.png' title='Cancel'>").click(buildUI);
+  let btnCancel = $("<img id='btnCancel' src='../resources/cancel.png' title='Cancel'>").click(buildUI);
   $(el).children(":last-child").empty()
     .append(btnSave)
     .append("&nbsp;&nbsp;")
     .append(btnCancel);
 }
 
-function makeEditorSession() {
+function makeEditorProjectNew() {
   let el = $("#trCreate");
+  $("#btnCancel").click(); // to prevent id collide
+  el.empty()
+    .append(`<td><input id="txbName" required/></td>`)
+    .append(`<td><input id="txbDescription" required/></td>`)
+    .append(`<td></td>`)
+    .append(`<td></td>`)
+    .append(`<td>
+      <img class="btnCreate" src="../resources/create.png" title="Create"/>
+      <img class="btnCancelSession" src="../resources/cancel.png" title="Cancel"/>
+    </td>`);
+
+  function validate() {
+    let name = $("#txbName").val();
+    let description = $("#txbDescription").val();
+    if (!name) return;
+    bg.createNewProject(name, description)
+    .then(buildUI, alert);
+  }
+
+  $(".btnCreate").click(validate);
+  $(".btnCancelSession").click(buildUI);
+  $("#txbDescription, #txbName").keydown(function (e) {
+    if (e.key === "Enter") validate();
+  });
+  $("#txbName").focus();
+}
+
+function makeEditorSessionNew() {
+  let el = $("#trCreateSesion");
   let name = el.attr("data-name");
   let project = bg.projects[name];
   el.empty()
@@ -95,22 +148,35 @@ function makeEditorSession() {
     </td>`)
     .append(`<td>
       <img class="btnCreateSession" src="../resources/create.png" title="Create"/>
+      <img class="btnCancelSession" src="../resources/cancel.png" title="Cancel"/>
     </td>`);
 
-  $(".btnCreateSession").click(function () {
+  function validate() {
     let start = moment($("#txbDate").val() + " " + $("#txbTime").val());
     let duration = { hours:Number($("#txbHours").val()), minutes:Number($("#txbMinutes").val()) };
     project.createSession(start, duration);
     buildUI();
     $(`#tblProjects tr[data-name='${name}'] .btnInspect`).click();
+  }
+
+  $(".btnCreateSession").click(validate);
+  $(".btnCancelSession").click(buildUI);
+  $("#txbDate, #txbTime, #txbHours, #txbMinutes").keydown(function (e) {
+    if (e.key === "Enter") validate();
   });
+  $("#txbDate").focus();
 }
 
 
 function inspectProject(e) {
   let name = $(this).attr("data-name");
   let project = bg.projects[name];
-  let table = $("#tblSessions").empty().append(`<tr><th colspan=4><h2>Sessions</h2></th></tr>`);
+  let table = $("#tblSessions").empty().append(`<tr>
+    <th colspan=4>
+      <h2>Sessions <img class="btnCancelInspect" src="../resources/cancel.png" title="Close"/></h2>
+    </th>
+  </tr>`);
+  $(".btnCancelInspect").click(e => table.empty());
   let sessions = project.sessions.concat(project.currentSession || []).reverse();
   $(`<tr>`)
     .append(`<th>Started At</th>`)
@@ -129,7 +195,7 @@ function inspectProject(e) {
       </td>` : `<td>Current session</td>`)
       .appendTo(table);
   }
-  $(`<tr id='trCreate' data-name="${name}">`)
+  $(`<tr id='trCreateSesion' data-name="${name}">`)
     .append(`<td colspan=${$("#tblSessions tr").eq(1).children().length}>
       <img class="btnCreateSession" src="../resources/create.png" title="Create"/>
     </td>`)
@@ -142,5 +208,5 @@ function inspectProject(e) {
     $(`#tblProjects tr[data-name='${name}'] .btnInspect`).click();
   });
 
-  $(".btnCreateSession").click(makeEditorSession);
+  $(".btnCreateSession").click(makeEditorSessionNew);
 }
